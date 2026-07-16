@@ -20,7 +20,7 @@ copier copy git+https://github.com/krantzy/copier-python-api-template.git my-new
 Pin to a specific tag if you don't want the latest template state:
 
 ```bash
-copier copy --vcs-ref v0.2.0 git+https://github.com/krantzy/copier-python-api-template.git my-new-project
+copier copy --vcs-ref v0.1.0 git+https://github.com/krantzy/copier-python-api-template.git my-new-project
 ```
 
 To pull in template updates on an already-generated project:
@@ -60,7 +60,7 @@ to detect updates for `copier update`:
 
 ```bash
 git commit -m "feat: add health probes"
-git tag v0.2.0
+git tag v0.1.0
 git push origin main --tags
 ```
 
