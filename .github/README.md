@@ -14,13 +14,13 @@ generated project gets its own `README.md` (rendered from `README.md.jinja`).
 ## Usage
 
 ```bash
-copier copy git+https://github.com/<owner>/copier-python-api-template.git my-new-project
+copier copy git+https://github.com/krantzy/copier-python-api-template.git my-new-project
 ```
 
 Pin to a specific tag if you don't want the latest template state:
 
 ```bash
-copier copy --vcs-ref v0.2.0 git+https://github.com/<owner>/copier-python-api-template.git my-new-project
+copier copy --vcs-ref v0.2.0 git+https://github.com/krantzy/copier-python-api-template.git my-new-project
 ```
 
 To pull in template updates on an already-generated project:
