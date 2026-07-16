@@ -1,6 +1,11 @@
-def main():
-    print("Hello from krantzy-api-template!")
+import uvicorn
 
+from src.config import settings
 
 if __name__ == "__main__":
-    main()
+    uvicorn.run(
+        "src.app:app",
+        host=settings.host,
+        port=settings.port,
+        reload=settings.reload,
+    )

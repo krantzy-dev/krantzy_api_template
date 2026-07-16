@@ -1,0 +1,65 @@
+from enum import StrEnum
+from pathlib import Path
+
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class Environment(StrEnum):
+    LOCAL = "LOCAL"
+    TESTING = "TESTING"
+    PRODUCTION = "PRODUCTION"
+
+
+ROOT_DIR = Path(__file__).resolve().parent.parent
+SRC_DIR = ROOT_DIR / "src"
+SECRET_DIR = ROOT_DIR / "secret"
+
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=SECRET_DIR / ".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
+    # General
+    environment: Environment = Environment.LOCAL
+    log_level: str = "INFO"
+
+    # Paths
+    root_dir: Path = ROOT_DIR
+    src_dir: Path = SRC_DIR
+    secret_dir: Path = SECRET_DIR
+
+    # Server
+    host: str = "0.0.0.0"
+    port: int = 8000
+
+    # Database
+    postgres_user: str = "postgres"
+    postgres_password: str = "postgres"
+    postgres_host: str = "localhost"
+    postgres_port: int = 5432
+    postgres_db: str = "{{ db_name }}"
+    test_db_name: str = "{{ db_name }}_test"
+
+    @property
+    def reload(self) -> bool:
+        return self.environment == Environment.LOCAL
+
+    @property
+    def db_url(self) -> str:
+        return (
+            f"postgresql+psycopg://{self.postgres_user}:{self.postgres_password}"
+            f"@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
+        )
+
+    @property
+    def test_db_url(self) -> str:
+        return (
+            f"postgresql+psycopg://{self.postgres_user}:{self.postgres_password}"
+            f"@{self.postgres_host}:{self.postgres_port}/{self.test_db_name}"
+        )
+
+
+settings = Settings()

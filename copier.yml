@@ -1,0 +1,71 @@
+_min_copier_version: "9.0.0"
+_envops:
+  trim_blocks: true
+  lstrip_blocks: true
+  keep_trailing_newline: true
+
+# ---------------------------------------------------------------------------
+# Questions
+# ---------------------------------------------------------------------------
+
+project_name:
+  type: str
+  help: Human-readable project name (e.g. "Order Service")
+
+project_slug:
+  type: str
+  help: Directory / package slug (snake_case, used for the generated folder)
+  default: "{{ project_name.lower().replace(' ', '_').replace('-', '_') }}"
+
+project_description:
+  type: str
+  help: One-line description of what this API does
+  default: "A FastAPI service."
+
+author_name:
+  type: str
+  help: Author name
+
+author_email:
+  type: str
+  help: Author email
+
+python_version:
+  type: str
+  help: Python version to target
+  default: "3.11"
+  choices:
+    - "3.11"
+    - "3.12"
+    - "3.13"
+
+db_name:
+  type: str
+  help: Default database name (used to derive the test DB name too)
+  default: "{{ project_slug }}"
+
+use_docker_compose:
+  type: bool
+  help: Include a docker-compose.yml for local Postgres + app?
+  default: true
+
+github_owner:
+  type: str
+  help: GitHub org/user this repo will live under (used for ghcr.io image tags in CI)
+  default: "krantzy-dev"
+
+# ---------------------------------------------------------------------------
+# Conditional file exclusion
+# ---------------------------------------------------------------------------
+
+_exclude:
+  - "copier.yml"
+  - "copier.yaml"
+  - ".github/README.md"
+  - "~*"
+  - "*.py[co]"
+  - "__pycache__"
+  - ".git"
+  - ".DS_Store"
+  - ".svn"
+  - "{% if not use_docker_compose %}docker-compose.yml{% endif %}"

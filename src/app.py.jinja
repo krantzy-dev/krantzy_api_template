@@ -1,0 +1,16 @@
+from fastapi import FastAPI
+
+from src.exception_handlers import register_exception_handlers
+from src.logging_config import configure_logging
+from src.routes import api_router
+
+configure_logging()
+
+app = FastAPI(title="{{ project_name }}")
+
+register_exception_handlers(app)
+app.include_router(api_router)
+
+@app.get("/health")
+def health_check() -> dict[str, str]:
+    return {"status": "ok"}

@@ -1,0 +1,68 @@
+# {{ project_name }}
+
+{{ project_description }}
+
+## Stack
+
+- [FastAPI](https://fastapi.tiangolo.com/) + [Uvicorn](https://www.uvicorn.org/)
+- [SQLAlchemy](https://www.sqlalchemy.org/) + [Alembic](https://alembic.sqlalchemy.org/)
+- [pydantic-settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/) for configuration
+- [uv](https://docs.astral.sh/uv/) for dependency management
+- [ruff](https://docs.astral.sh/ruff/) for linting and formatting
+- [pytest](https://docs.pytest.org/) for testing
+
+## Getting started
+
+```bash
+uv sync
+cp secret/.env.example secret/.env  # fill in real values
+uv run alembic upgrade head
+uv run python main.py
+```
+
+The API will be available at `http://localhost:8000`, docs at `http://localhost:8000/docs`.
+
+## Development
+
+```bash
+uv run pre-commit install   # once, sets up git hooks
+uv run ruff check .
+uv run ruff format .
+uv run pytest
+```
+
+## Project layout
+
+```
+src/
+    app.py                 FastAPI app instance
+    config.py               Settings (env vars, paths, environment)
+    database.py             DB session management
+    exceptions.py           Custom exceptions
+    exception_handlers.py   FastAPI exception handler registration
+    logging_config.py       Logging setup
+    load_data/               Data import / seeding logic
+    models/                  SQLAlchemy models
+    repositories/            DB interaction logic
+    routes/                  API route definitions (orchestration)
+    schemas/                 Pydantic schemas
+    services/                Pure business logic
+alembic/                    DB migrations
+secret/                     .env files (never commit .env)
+tests/
+    unit/                    Unit tests (services, pure logic)
+    integration/             Integration tests (DB, API)
+```
+
+## Releases
+
+This project uses [release-please](https://github.com/googleapis/release-please) for versioning
+and changelog generation, driven by [Conventional Commits](https://www.conventionalcommits.org/).
+Every push to `main` is linted and tested; a merged release-please PR builds and pushes a
+Docker image to `ghcr.io`.
+
+## Roadmap
+
+- Helm chart for Kubernetes deployment
+- Default authentication flow
+- External secret management option
