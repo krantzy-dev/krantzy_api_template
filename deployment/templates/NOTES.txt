@@ -1,0 +1,4 @@
+{{ .Chart.Name }} ist deployed (Release "{{ .Release.Name }}", Image-Tag {{ .Values.image.tag | default .Chart.AppVersion }}).
+
+Prüfen mit:
+  kubectl get pods -l app.kubernetes.io/instance={{ .Release.Name }}
