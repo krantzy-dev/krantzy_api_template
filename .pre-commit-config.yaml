@@ -15,3 +15,12 @@ repos:
       - id: ruff-check
         args: [--fix]
       - id: ruff-format
+  
+  - repo: local
+    hooks:
+      - id: helm-lint
+        name: helm lint
+        entry: helm lint deployment
+        language: system
+        files: ^deployment/
+        pass_filenames: false

@@ -54,6 +54,25 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+  package-and-push-helm:
+    needs: release-please
+    if: ${{ '{{ needs.release-please.outputs.release_created }}' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+
+      - uses: azure/setup-helm@v5
+        with:
+          version: 'latest'
+
+      - run: helm registry login ghcr.io -u ${{ '{{ github.actor }}' }} --password-stdin <<< "${{ '{{ secrets.GITHUB_TOKEN }}' }}"
+
+      - run: helm package deployment --destination .
+
+      - run: helm push {{ project_slug }}-*.tgz oci://ghcr.io/{{ github_owner }}/charts
+
   update-lockfile:
     needs: release-please
     if: ${{ '{{ needs.release-please.outputs.release_created }}' }}
@@ -80,3 +99,4 @@ jobs:
             git commit -m "chore: sync uv.lock for ${{ '{{ needs.release-please.outputs.tag_name }}' }} [skip ci]"
             git push
           fi
+

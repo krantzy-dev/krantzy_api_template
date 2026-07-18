@@ -6,7 +6,12 @@
       "package-name": "{{ project_slug }}",
       "changelog-path": "CHANGELOG.md",
       "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true
+      "bump-patch-for-minor-pre-major": true,
+      "include-v-in-tag": false,
+      "extra-files": [
+        { "type": "yaml", "path": "deployment/Chart.yaml", "jsonpath": "$.version" },
+        { "type": "yaml", "path": "deployment/Chart.yaml", "jsonpath": "$.appVersion" }
+      ]
     }
   }
 }
