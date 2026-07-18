@@ -1,7 +1,13 @@
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 
-from src.exceptions import ConflictError, NotFoundError, ValidationError
+from src.exceptions import (
+    ConflictError, 
+    NotFoundError, 
+    ValidationError,
+    UnauthorizedError,
+    ForbiddenError,
+)
 
 
 def register_exception_handlers(app: FastAPI) -> None:
