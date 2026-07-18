@@ -40,7 +40,6 @@ copier update
 | `author_name` / `author_email` | Author metadata for`pyproject.toml`                                |
 | `python_version`                 | 3.11 / 3.12 / 3.13, drives`.python-version` and Docker base images |
 | `db_name`                        | Postgres DB name (test DB is derived as`<db_name>_test`)           |
-| `use_docker_compose`             | Whether to include`docker-compose.yml`                             |
 | `github_owner`                   | Used to build`ghcr.io/<owner>/<slug>` image tags in CI             |
 
 ## Structure

@@ -44,11 +44,6 @@ db_name:
   help: Default database name (used to derive the test DB name too)
   default: "{{ project_slug }}"
 
-use_docker_compose:
-  type: bool
-  help: Include a docker-compose.yml for local Postgres + app?
-  default: true
-
 github_owner:
   type: str
   help: GitHub org/user this repo will live under (used for ghcr.io image tags in CI)
@@ -68,4 +63,3 @@ _exclude:
   - ".git"
   - ".DS_Store"
   - ".svn"
-  - "{% if not use_docker_compose %}docker-compose.yml{% endif %}"
